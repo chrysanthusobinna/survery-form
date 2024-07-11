@@ -49,7 +49,11 @@ I used jQuery to create a user-friendly form and seamless responses for users wi
 I utilized the jQuery DataTable library to make loading patients seamless, with integrated search and sort functionalities.
 
 ### Dynamic Website
-The website is dynamic, allowing more questions to be added and providing flexibility in choosing which question scores should be counted or not.
+  -The website is dynamic, allowing more questions to be added and providing flexibility in choosing which question scores should be counted or not.
+  - Displaying one question at a time to improve the user experience and make the form more manageable.
+  - Offering options for both single response edits and bulk response edits to streamline data management.
+
+
 
 
 ### Validation and Data Sanitization
