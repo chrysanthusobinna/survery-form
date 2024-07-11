@@ -1,0 +1,64 @@
+    .header,
+    .footer {
+        background-color: #007bff;
+        color: white;
+    }
+
+
+    .footer {
+        padding: 15px 0;
+    }
+
+
+    .logo h1 {
+        color: #fff;
+        margin-bottom: 0;
+
+    }
+
+    .header .logo {
+        text-decoration: none;
+    }
+
+
+    .range-value {
+        font-weight: bold;
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+
+    .question {
+        display: none;
+    }
+
+    .question.active {
+        display: block;
+    }
+
+    .mt-100 {
+        margin-top: 100px;
+    }
+
+
+
+    .card-outline {
+        border-top: 5px solid #007bff;
+        /* Border color similar to Bootstrap's card border */
+    }
+
+
+    .list-group .list-group-item {
+        text-decoration: none;
+    }
+
+
+    .badge-customx {
+     
+        width: 40px; 
+    }
+
+
+    .card-patient-list {
+        margin: 20px;
+    }
