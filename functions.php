@@ -210,5 +210,18 @@ function validateQuestion($question) {
 }
 
 
+//function to check if all values in array are integer or not
+function IFArrayResponseIsIntegers($array) {
+    foreach ($array as $value) {
+        
+        if (!filter_var($value, FILTER_VALIDATE_INT) !== false) {
+            return false; 
+        }
+    }
+    return true; 
+}
+
+
+
 ?>
 

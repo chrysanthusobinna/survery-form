@@ -14,41 +14,6 @@ if ($patientID == 0) {
 }
 
 
-
-// Handle form submission for updates
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-
-    // Update patient details
-    $updatePatientQuery = "{CALL UpdatePatientDetails(?, ?, ?, ?, ?)}";
-    $parameters = [
-        $patientID,
-        $_POST['firstName'],
-        $_POST['surname'],
-        $_POST['age'],
-        $_POST['dateOfBirth']
-    ];
-    sqlsrv_query($conn, $updatePatientQuery, $parameters);
-
-    // Update survey responses
-    foreach ($_POST['responses'] as $responseID => $answer) {
-        $updateResponseQuery = "{CALL UpdateBriefPainInventoryResponse(?, ?)}";
-        $responseParams = [
-            $responseID,
-            intval($answer)
-        ];
-        sqlsrv_query($conn, $updateResponseQuery, $responseParams);
-    }
-
-    // Redirect to the same page to refresh data
-
-    $custom_flash_msg = "Record Saved successfully!";
-    setFlashMessage($custom_flash_msg, 'success'); //set error or success
-    header("Location:  view-patient-details.php?id=$patientID");
-    
-    exit;
-}
-
         // Fetch patient details
         $patientQuery = "{CALL GetPatientDetailsByID(?)}";
         $parameters = [$patientID];
@@ -90,6 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <div class="card-body">
                 <form  id="FormPatientDetails" method="post" action="">
+                    <input type="hidden" name="patientID" value="<?php echo $patientID; ?>">
+                 
                     <!-- Patient Details Form -->
                     <div class="form-group">
                         <label for="firstName">First Name:</label>
@@ -152,3 +119,97 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
  
 
     <?php include("footer.php"); ?>
+
+    
+<?php
+
+// Handle form submission for updates
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+
+    $patientID              =       $_POST['patientID']; 
+    $firstName              =       $_POST['firstName'];
+    $surname                =       $_POST['surname'];
+    $age                    =       $_POST['age'];
+    $dateOfBirth            =       $_POST['dateOfBirth'];
+
+
+    $responses              =       $_POST['responses'];
+
+    // Validate inputs
+    if (!isValidName($firstName)) {
+
+            $custom_flash_msg = "Invalid first name";
+            setFlashMessage($custom_flash_msg, 'error');
+            echo "<script> window.location.href = '?id=$patientID'; </script>";
+            exit;
+    }
+
+    if (!isValidName($surname)) {
+
+            $custom_flash_msg = "Invalid surname";
+            setFlashMessage($custom_flash_msg, 'error');
+            echo "<script> window.location.href = '?id=$patientID'; </script>";
+            exit;       
+    }
+
+    if (!isValidDate($dateOfBirth)) {
+
+            $custom_flash_msg = "Invalid date of birth";
+            setFlashMessage($custom_flash_msg, 'error');
+            echo "<script> window.location.href = '?id=$patientID'; </script>";
+            exit;          
+    }
+
+    if (!isValidAge($age)) {
+
+        $custom_flash_msg = "Invalid age";
+        setFlashMessage($custom_flash_msg, 'error');
+        echo "<script> window.location.href = '?id=$patientID'; </script>";
+        exit;  
+    }
+
+    
+    
+    if (!IFArrayResponseIsIntegers($responses)) {
+
+        $custom_flash_msg = "Invalid Response";
+        setFlashMessage($custom_flash_msg, 'error');
+        echo "<script> window.location.href = '?id=$patientID'; </script>";
+        exit; 
+    }  
+
+
+
+    // Update patient details
+    $updatePatientQuery = "{CALL UpdatePatientDetails(?, ?, ?, ?, ?)}";
+    $parameters = [
+        $patientID,
+        $_POST['firstName'],
+        $_POST['surname'],
+        $_POST['age'],
+        $_POST['dateOfBirth']
+    ];
+    sqlsrv_query($conn, $updatePatientQuery, $parameters);
+
+    // Update survey responses
+    foreach ($_POST['responses'] as $responseID => $answer) {
+        $updateResponseQuery = "{CALL UpdateBriefPainInventoryResponse(?, ?)}";
+        $responseParams = [
+            $responseID,
+            intval($answer)
+        ];
+        sqlsrv_query($conn, $updateResponseQuery, $responseParams);
+    }
+
+ 
+    $custom_flash_msg = "Record Saved successfully!";
+    setFlashMessage($custom_flash_msg, 'success'); //set error or success
+    echo "<script> window.location.href = 'view-patient-details.php?id=$patientID'; </script>";
+
+    
+    
+}
+
+
+?>
