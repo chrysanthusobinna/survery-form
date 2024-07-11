@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     
     
-    if (!IFArrayResponseIsIntegers($responses)) {
+    if (!IFArrayIsIntegers($responses)) {
 
         $custom_flash_msg = "Invalid Response";
         setFlashMessage($custom_flash_msg, 'error');

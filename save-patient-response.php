@@ -30,6 +30,16 @@ $questionIDs            =   $_POST['QuestionIDs']; // Array of question IDs
         die(json_encode(array("status" => "error", "message" => "Invalid age")));
     }
 
+
+
+    if (!IFArrayResponseIsIntegers($answers)) {
+        die(json_encode(array("status" => "error", "message" => "Invalid Response Value")));
+    }  
+
+    if (!IFArrayResponseIsIntegers($questionIDs)) {
+        die(json_encode(array("status" => "error", "message" => "Invalid Response Value")));
+    }  
+
     // Insert into Patients table using stored procedure
 
     $patientID = 0; // Initialize the variable that will store the output value
