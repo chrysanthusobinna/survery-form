@@ -96,7 +96,7 @@ include ('header.php');
 
         <div class="card shadow mb-3">
             <div class="card-header bg-primary text-white">
-                Patient Responses
+            Brief Pain Inventory (BPI)
             </div>
             <div class="card-body">
                 <!-- Survey Responses -->

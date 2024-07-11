@@ -111,9 +111,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
 
            
-
-                    <!-- Survey Responses Form -->
-                    <h3>Survey Responses</h3>
+                    <hr/>
+                    
+                    <!-- Update  Brief Pain Inventory   Form -->
+                    <h3>Brief Pain Inventory (BPI)</h3>
 
                     <table class="table table-bordered table-striped">
                     <thead>
