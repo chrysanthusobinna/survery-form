@@ -178,5 +178,37 @@ function calculateAge($date) {
 
  
 
+
+// Function to validate input integers
+function validateInteger($value, $name) {
+    if (!is_int($value)) {
+        $custom_flash_msg = "$name must be an integer.";
+        setFlashMessage($custom_flash_msg, 'error');
+        echo "<script> window.location.href = '?'; </script>";
+        exit;
+    }
+}
+
+// Function to validate count score must be (0 or 1)
+function validateCountScore($value) {
+    if ($value !== '0' && $value !== '1') {
+        $custom_flash_msg = "CountScore must be 0 or 1!";
+        setFlashMessage($custom_flash_msg, 'error');
+        echo "<script> window.location.href = '?'; </script>";
+        exit;
+    }
+}
+
+// Function to validate question
+function validateQuestion($question) {
+    if (empty($question) || strlen($question) > 255) {
+        $custom_flash_msg = "Question cannot be empty and must be less than 256 characters!";
+        setFlashMessage($custom_flash_msg, 'error');
+        echo "<script> window.location.href = '?'; </script>";
+        exit;
+    }
+}
+
+
 ?>
 
