@@ -75,7 +75,8 @@ while ($row = sqlsrv_fetch_array($questionsResult, SQLSRV_FETCH_ASSOC)) {
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="createQuestion">Question</label>
-                        <input type="text" class="form-control" id="createQuestion" name="question" required>
+                        <textarea  class="form-control" id="createQuestion" name="question" required></textarea>
+
                     </div>
                     <div class="form-group">
                         <label for="createRangeMin">Range Min</label>
@@ -118,7 +119,7 @@ while ($row = sqlsrv_fetch_array($questionsResult, SQLSRV_FETCH_ASSOC)) {
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="editQuestion">Question</label>
-                        <input type="text" class="form-control" id="editQuestion" name="question" required>
+                        <textarea class="form-control" id="editQuestion" name="question" required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="editRangeMin">Range Min</label>
