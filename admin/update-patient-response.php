@@ -19,15 +19,13 @@ if ($patientID == 0) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
-    $age        =       calculateAge($_POST['dateOfBirth']);
-
     // Update patient details
     $updatePatientQuery = "{CALL UpdatePatientDetails(?, ?, ?, ?, ?)}";
     $parameters = [
         $patientID,
         $_POST['firstName'],
         $_POST['surname'],
-        $age,
+        $_POST['age'],
         $_POST['dateOfBirth']
     ];
     sqlsrv_query($conn, $updatePatientQuery, $parameters);
@@ -110,9 +108,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label id="dateOfBirth-error" class="text-danger" for="dateOfBirth"></label>
                         </div>
 
+                        <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="text" class="form-control" id="age" value="<?php echo htmlspecialchars($patient['Age']); ?>"  readonly>
+                        <input type="hidden" class="form-control" id="age_x" name="age"  value="<?php echo htmlspecialchars($patient['Age']); ?>">
+                    </div>
            
                     <hr/>
-                    
+
                     <!-- Update  Brief Pain Inventory   Form -->
                     <h3>Brief Pain Inventory (BPI)</h3>
 

@@ -20,8 +20,11 @@
     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>
 
-        <!-- Custom JS Code -->
+    <!-- Custom JS Code -->
     <script src="../assets/js/admin-script.js"></script>
+    <script src="../assets/js/validate-patient-detail-form.js"></script>
+
+
 
     <script>
     $(document).ready(function() {
