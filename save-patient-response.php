@@ -32,11 +32,11 @@ $questionIDs            =   $_POST['QuestionIDs']; // Array of question IDs
 
 
 
-    if (!IFArrayResponseIsIntegers($answers)) {
+    if (!IFArrayIsIntegers($answers)) {
         die(json_encode(array("status" => "error", "message" => "Invalid Response Value")));
     }  
 
-    if (!IFArrayResponseIsIntegers($questionIDs)) {
+    if (!IFArrayIsIntegers($questionIDs)) {
         die(json_encode(array("status" => "error", "message" => "Invalid Response Value")));
     }  
 
