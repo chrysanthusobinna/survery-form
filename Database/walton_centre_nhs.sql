@@ -136,6 +136,17 @@ BEGIN
 END
 GO
 
+-- Stored Procedure for Deleting BriefPainInventoryResponses by QuestionID
+CREATE PROCEDURE DeleteBriefPainInventoryResponsesByQuestionID
+    @QuestionID INT
+AS
+BEGIN
+    DELETE FROM BriefPainInventoryResponses
+    WHERE QuestionID = @QuestionID;
+END
+GO
+
+
 -- Stored Procedure for Deleting Patients
 CREATE PROCEDURE DeletePatient
     @PatientID INT

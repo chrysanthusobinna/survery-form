@@ -304,28 +304,52 @@ if (isset($_POST["createQuestionForm"])) {
 
 
 <?php
-
+ 
 if (isset($_POST["deleteQuestion"])) {
     $questionID = intval($_POST['questionID']);
 
+    //   Check if the question has related responses
+    $checkQuery = "SELECT COUNT(*) AS ResponseCount FROM BriefPainInventoryResponses WHERE QuestionID = ?";
+    $stmt = sqlsrv_prepare($conn, $checkQuery, array($questionID));
+    
+    if (sqlsrv_execute($stmt)) {
+        $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+        
+        // If there are related responses, delete them first
+        if ($row['ResponseCount'] > 0) {
+            $deleteResponsesQuery       =   "{CALL DeleteBriefPainInventoryResponsesByQuestionID(?)}";
+            $parameters                 =   array($questionID);
+            $deleteResponsesResult      =   sqlsrv_query($conn, $deleteResponsesQuery, $parameters);
+            
+            if ($deleteResponsesResult === false) {
+                $errorMsg               = sqlsrv_errors();
+                $custom_flash_msg       = "Failed to delete related responses: " . print_r($errorMsg, true);
+                setFlashMessage($custom_flash_msg, 'error');
+                echo "<script> window.location.href = '?'; </script>";
+                exit;
+            }
+        }
+    } else {
+        $errorMsg = sqlsrv_errors();
+        $custom_flash_msg = "Error checking related responses: " . print_r($errorMsg, true);
+        setFlashMessage($custom_flash_msg, 'error');
+        echo "<script> window.location.href = '?'; </script>";
+        exit;
+    }
+
+    //   Proceed to delete the question
     $deleteQuery = "{CALL DeletePainInventoryQuestion(?)}";
     $parameters = array(
-        array(&$questionID, SQLSRV_PARAM_IN)
+        array($questionID, SQLSRV_PARAM_IN)
     );
+    $result = sqlsrv_query($conn, $deleteQuery, $parameters);
 
-    // Execute deleteQuery
-    sqlsrv_query($conn, $deleteQuery, $parameters);
-
-
-    // Check for errors
     if ($result === false) {
-        // Retrieve and display the error message
-        $errorMsg = sqlsrv_errors();
-
-        $custom_flash_msg = "Delete Question Failed" . print_r($errorMsg, true);
+        $errorMsg               = sqlsrv_errors();
+        $custom_flash_msg       = "Delete Question Failed: " . print_r($errorMsg, true);
         setFlashMessage($custom_flash_msg, 'error');
     } else {
-        $custom_flash_msg = "Question Deleted!";
+        $custom_flash_msg       = "Question Deleted!";
         setFlashMessage($custom_flash_msg, 'success');
     }
 
